@@ -19,6 +19,7 @@ public class Painter : MonoBehaviour
     int offset_SquareBrush;
     Vector2Int sizeOfTexture;
     Color32[] squareBrushColors;
+    Camera cam;
 
     void Awake()
     {      
@@ -36,6 +37,7 @@ public class Painter : MonoBehaviour
         sizeOfTexture = new Vector2Int((int)meshRenderer.bounds.size.x, (int)meshRenderer.bounds.size.y);
         customTexture = new Texture2D(sizeOfTexture.x, sizeOfTexture.y);
         meshRenderer.material.mainTexture = customTexture;
+        cam = Camera.main;
         ChangeBrushSize(0.1f);
     }
 
@@ -84,7 +86,7 @@ public class Painter : MonoBehaviour
     {
         if (!((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) || Input.GetMouseButton(0)))
             return;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100))
         {
             MeshCollider meshCollider = hit.collider as MeshCollider;
