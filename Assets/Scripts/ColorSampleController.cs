@@ -15,7 +15,6 @@ public class ColorSampleController : MonoBehaviour
 
     private void OnEnable()
     {
-        print(ColorSetter.instance);
         ColorSetter.instance.ColorChanged += ChangeDrawColor;
     }
 
