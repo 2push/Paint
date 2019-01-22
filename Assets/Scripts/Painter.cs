@@ -81,22 +81,22 @@ public class Painter : MonoBehaviour
             squareBrushColors[i] = color;
         }
     }
-
+    
     void Update()
     {
         if (!((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) || Input.GetMouseButton(0)))
             return;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100))
+        if (Physics.Raycast(ray, out RaycastHit hit, 5))
         {
             MeshCollider meshCollider = hit.collider as MeshCollider;
             if (meshCollider == null || meshCollider.sharedMesh == null)
                 return;
             Vector2 pixelUV = new Vector2(hit.textureCoord.x, hit.textureCoord.y);
             pixelPos = new Vector2Int((int)(pixelUV.x * customTexture.width), (int)(pixelUV.y * customTexture.height));
-            brushTypes[brushType].Invoke(pixelPos);
+            brushTypes[brushType].Invoke(pixelPos); //method to set pixels color
             customTexture.Apply();
-        }
+        }       
     }
 
     void BrushTypeHandler_Pencil(Vector2 pixel)
@@ -110,7 +110,7 @@ public class Painter : MonoBehaviour
         (int)Mathf.Clamp(pixel.y - offset_SquareBrush, 0, sizeOfTexture.y - brushSize), brushSize, brushSize, squareBrushColors);
     }  
 
-    public Texture2D GetTexture()
+    public Texture2D GetTexture() //is used by to get the texture for a save
     {
         return customTexture;
     }

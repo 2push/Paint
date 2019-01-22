@@ -6,8 +6,8 @@ public class PictureSaver : MonoBehaviour
 {
     public void SavePicture()
     {
-        Texture2D texture = FindObjectOfType<Painter>().GetTexture();
-        StartCoroutine(SaveTextureToFile(texture));
+        Texture2D texture = FindObjectOfType<Painter>().GetTexture(); //there is only one object to draw on, so I'm free to do this
+        StartCoroutine(SaveTextureToFile(texture)); //is inside a coroutine to not to get a lag while the pic is being saved
     }
 
     IEnumerator SaveTextureToFile(Texture2D savedTexture)
